@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>النجار للبرمجة - أدوات الهاتف المباشرة</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #333; line-height: 1.6; min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        header { background: rgba(255, 255, 255, 0.95); padding: 30px; border-radius: 20px; margin-bottom: 30px; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); }
+        header h1 { color: #764ba2; font-size: 2.5em; margin-bottom: 10px; }
+        .contact-info { background: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 15px; margin: 20px 0; text-align: center; border-right: 4px solid #25D366; }
+        .whatsapp-btn { background: linear-gradient(135deg, #25D366, #128C7E); color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; display: inline-block; margin: 10px 5px; transition: all 0.3s ease; }
+        .whatsapp-btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
+        .tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .tool-card { background: rgba(255, 255, 255, 0.95); padding: 25px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); text-align: center; }
+        .tool-card h3 { color: #764ba2; margin-bottom: 15px; font-size: 1.4em; }
+        .btn { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 12px 25px; border: none; border-radius: 8px; font-size: 1em; cursor: pointer; margin: 10px 5px; transition: all 0.3s ease; }
+        .btn:hover { transform: scale(1.05); }
+        .result { margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px; border-right: 4px solid #667eea; }
+        textarea, input, select { width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; }
+        footer { background: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 15px; text-align: center; margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛠️ النجار للبرمجة</h1>
+            <p>أدوات هاتف مباشرة تعمل من المتصفح بدون تحميل</p>
+        </header>
+
+        <div class="contact-info">
+            <h3>📞 للتواصل معنا</h3>
+            <p><strong>إدارة: أبو رجب</strong></p>
+            <p>📱 واتساب: 0947093649</p>
+            <a href="https://wa.me/963947093649" class="whatsapp-btn" target="_blank">💬 تواصل معنا على واتساب</a>
+        </div>
+
+        <div class="tool-grid">
+            <div class="tool-card">
+                <h3>📊 عداد الكلمات والحروف</h3>
+                <textarea id="textInput" rows="5" placeholder=" اكتب النص هنا..."></textarea>
+                <button class="btn" onclick="countWords()">عد الكلمات</button>
+                <div class="result" id="wordCountResult"></div>
+            </div>
+
+            <div class="tool-card">
+                <h3>📏 محول الوحدات</h3>
+                <input type="number" id="unitInput" placeholder="ادخل الرقم">
+                <select id="unitType">
+                    <option value="cmToInch">سم → بوصة</option>
+                    <option value="kmToMile">كم → ميل</option>
+                    <option value="kgToPound">كجم → رطل</option>
+                </select>
+                <button class="btn" onclick="convertUnits()">تحويل</button>
+                <div class="result" id="unitResult"></div>
+            </div>
+
+            <div class="tool-card">
+                <h3>⏰ حاسبة الوقت</h3>
+                <input type="number" id="hours" placeholder="عدد الساعات">
+                <button class="btn" onclick="calculateTime()">احسب</button>
+                <div class="result" id="timeResult"></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>📍 <strong>النجار للبرمجة</strong> - أدوات ذكية لحلول برمجية</p>
+            <p>📞 إدارة أبو رجب - واتساب: 0947093649</p>
+            <p>© 2024 النجار للبرمجة - جميع الحقوق محفوظة</p>
+        </footer>
+    </div>
+
+    <script>
+        function countWords() {
+            const text = document.getElementById('textInput').value;
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            const chars = text.length;
+            document.getElementById('wordCountResult').innerHTML = `الكلمات: <strong>${words}</strong> | الحروف: <strong>${chars}</strong>`;
+        }
+
+        function convertUnits() {
+            const value = parseFloat(document.getElementById('unitInput').value);
+            const type = document.getElementById('unitType').value;
+            let result = '';
+            if (isNaN(value)) {
+                result = 'ادخل رقم صحيح';
+            } else {
+                switch(type) {
+                    case 'cmToInch': result = `${value} سم = ${(value * 0.3937).toFixed(2)} بوصة`; break;
+                    case 'kmToMile': result = `${value} كم = ${(value * 0.6214).toFixed(2)} ميل`; break;
+                    case 'kgToPound': result = `${value} كجم = ${(value * 2.2046).toFixed(2)} رطل`; break;
+                }
+            }
+            document.getElementById('unitResult').innerHTML = result;
+        }
+
+        function calculateTime() {
+            const hours = parseInt(document.getElementById('hours').value);
+            if (isNaN(hours)) {
+                document.getElementById('timeResult').innerHTML = 'ادخل عدد الساعات';
+                return;
+            }
+            const days = (hours / 24).toFixed(1);
+            const weeks = (hours / 168).toFixed(1);
+            document.getElementById('timeResult').innerHTML = `${hours} ساعة = ${days} يوم = ${weeks} أسبوع`;
+        }
+    </script>
+</body>
+</html>
